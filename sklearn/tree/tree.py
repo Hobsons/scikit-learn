@@ -350,6 +350,7 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator)):
 
     def _validate_X_predict(self, X, check_input):
         """Validate X whenever one tries to predict, apply, predict_proba"""
+        # print "X at start of tree.py's _validate_X_predict: {0}\nX's shape: {1}".format(X, X.shape)
         if self.tree_ is None:
             raise NotFittedError("Estimator not fitted, "
                                  "call `fit` before exploiting the model.")
@@ -367,10 +368,15 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator)):
                              "match the input. Model n_features is %s and "
                              "input n_features is %s "
                              % (self.n_features_, n_features))
-
+        # print "X at end of tree.py's _validate_X_predict: {0}\nX's shape: {1}".format(X, X.shape)
         return X
 
+    def predict_new(self, X, check_input=True):
+        # print "Top of tree.predict_new"
+        return self.tree_.predict_new(X)
+
     def predict(self, X, check_input=True):
+        # print "Top of tree.predict"
         """Predict class or regression value for X.
 
         For a classification model, the predicted class for each sample in X is
@@ -395,9 +401,10 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator)):
         """
         check_is_fitted(self, 'tree_')
         X = self._validate_X_predict(X, check_input)
+        # print "Right before self.tree_.predict(X)"
         proba = self.tree_.predict(X)
         n_samples = X.shape[0]
-
+        # print "Before Classification"
         # Classification
         if isinstance(self, ClassifierMixin):
             if self.n_outputs_ == 1:
@@ -416,7 +423,9 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator)):
         # Regression
         else:
             if self.n_outputs_ == 1:
+                # print "About to return proba"
                 return proba[:, 0]
+                # return proba
 
             else:
                 return proba[:, :, 0]

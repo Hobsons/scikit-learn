@@ -32,6 +32,8 @@ cdef struct Node:
     DOUBLE_t impurity                    # Impurity of the node (i.e., the value of the criterion)
     SIZE_t n_node_samples                # Number of samples at the node
     DOUBLE_t weighted_n_node_samples     # Weighted number of samples at the node
+    SIZE_t node_id
+    # INT32_t[2] values
 
 
 cdef class Tree:
@@ -66,9 +68,13 @@ cdef class Tree:
     cdef np.ndarray _get_node_ndarray(self)
 
     cpdef np.ndarray predict(self, object X)
+    cpdef tuple predict_new(self, object X)
 
+    cpdef tuple apply_new(self, object X)
     cpdef np.ndarray apply(self, object X)
+    cdef tuple _apply_dense_new(self, object X)
     cdef np.ndarray _apply_dense(self, object X)
+    cdef np.ndarray _apply_dense_bad(self, object X)
     cdef np.ndarray _apply_sparse_csr(self, object X)
 
     cpdef object decision_path(self, object X)

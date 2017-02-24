@@ -982,11 +982,11 @@ cdef class Tree:
         # print("got to Initialize feature contributions aggregator")
         # Initialize feature contributions aggregator
         # cdef np.ndarray[DTYPE_t, ndim=2] feature_contributions = np.zeros((n_samples, n_features), dtype=np.float32)
-        cdef np.ndarray[DTYPE_t, ndim=2] feature_contributions_with_pointer = np.zeros((n_samples, n_features), dtype=np.float32)
-        cdef DTYPE_t* feature_contributions_ptr = <DTYPE_t*> feature_contributions_with_pointer.data
+        cdef np.ndarray[DOUBLE_t, ndim=2] feature_contributions_with_pointer = np.zeros((n_samples, n_features), dtype=np.float64)
+        cdef DOUBLE_t* feature_contributions_ptr = <DOUBLE_t*> feature_contributions_with_pointer.data
         cdef SIZE_t fc_sample_stride = <SIZE_t> feature_contributions_with_pointer.strides[0] / <SIZE_t> feature_contributions_with_pointer.itemsize
         cdef SIZE_t fc_feature_stride = <SIZE_t> feature_contributions_with_pointer.strides[1] / <SIZE_t> feature_contributions_with_pointer.itemsize
-        cdef DTYPE_t this_node_val
+        cdef DOUBLE_t this_node_val
         cdef SIZE_t this_node_feat
         # cdef np.ndarray[DTYPE_t] tree_predictions = np.zeros((n_samples,), dtype=np.float32)
         # print("got thru Initialize feature contributions aggregator")

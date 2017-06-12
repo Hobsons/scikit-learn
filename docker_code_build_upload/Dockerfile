@@ -11,4 +11,4 @@ WORKDIR /usr/src/code
 
 RUN python setup.py bdist_egg
 
-CMD sh docker_code_build_upload/upload_egg_to_s3.sh
+CMD bash ./docker_code_build_upload/upload_egg_to_s3.sh

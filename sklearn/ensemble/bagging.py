@@ -951,7 +951,7 @@ class BaggingRegressor(BaseBagging, RegressorMixin):
 
         # Parallel loop
         n_jobs, n_estimators, starts = _partition_estimators(self.n_estimators,
-                                                             self.n_jobs, predict_always_onejob=True)
+                                                             self.n_jobs)
 
         all_y_hat = Parallel(n_jobs=n_jobs, verbose=self.verbose)(
             delayed(_parallel_predict_regression)(

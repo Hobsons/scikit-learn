@@ -913,7 +913,6 @@ class BaggingRegressor(BaseBagging, RegressorMixin):
                  oob_score=False,
                  warm_start=False,
                  n_jobs=1,
-                 predict_always_onejob=False,
                  random_state=None,
                  verbose=0):
         super(BaggingRegressor, self).__init__(
@@ -928,7 +927,6 @@ class BaggingRegressor(BaseBagging, RegressorMixin):
             n_jobs=n_jobs,
             random_state=random_state,
             verbose=verbose)
-        self.predict_always_onejob = predict_always_onejob
 
     def predict(self, X):
         """Predict regression target for X.
@@ -953,8 +951,7 @@ class BaggingRegressor(BaseBagging, RegressorMixin):
 
         # Parallel loop
         n_jobs, n_estimators, starts = _partition_estimators(self.n_estimators,
-                                                             self.n_jobs,
-                                                             only_one_job=self.predict_always_onejob)
+                                                             self.n_jobs, predict_always_onejob=True)
 
         all_y_hat = Parallel(n_jobs=n_jobs, verbose=self.verbose)(
             delayed(_parallel_predict_regression)(

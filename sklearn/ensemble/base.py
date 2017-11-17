@@ -140,10 +140,10 @@ class BaseEnsemble(BaseEstimator, MetaEstimatorMixin):
         return iter(self.estimators_)
 
 
-def _partition_estimators(n_estimators, n_jobs, only_one_job=False):
+def _partition_estimators(n_estimators, n_jobs, predict_always_onejob=False):
     """Private function used to partition estimators between jobs."""
     # Compute the number of jobs
-    if only_one_job:
+    if predict_always_onejob:
         n_jobs = 1
     else:
         n_jobs = min(_get_n_jobs(n_jobs), n_estimators)

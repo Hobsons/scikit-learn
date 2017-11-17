@@ -1,7 +1,7 @@
 FROM python:2.7
 RUN apt-get update
 
-RUN pip install Cython numpy==1.10.4 scipy==0.17.0 awscli
+RUN pip install Cython==0.25.2 numpy==1.10.4 scipy==0.17.0 awscli
 
 ADD . /usr/src/code/
 
